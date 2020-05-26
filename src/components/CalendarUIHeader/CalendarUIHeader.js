@@ -4,7 +4,7 @@ import {
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faArrowLeft, faArrowRight
+    faChevronLeft, faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import {connect} from "react-redux";
 
@@ -23,18 +23,18 @@ class CalendarUIHeader extends Component {
         return (<React.Fragment>
                 <Container>
                     <Row>
-                        <Col md="8" className="mt-3">
-                            <h3>
+                        <Col md="9" className="mt-3">
+                            <div className={"header-title"}>
                                 {moment(this.props.selectedDate).format( "MMMM YYYY")}
-                            </h3>
+                            </div>
                         </Col>
-                        <Col md="4" className="mt-3">
+                        <Col md="3" className="mt-3">
                             <div style={{display: 'flex', flexDirection: 'row', justifyContent: "space-around"}}>
-                                <FontAwesomeIcon icon={faArrowLeft} onClick={() => this.onMonthChange(-1)} style={{cursor: 'pointer'}}/>
+                                <div><FontAwesomeIcon icon={faChevronLeft} onClick={() => this.onMonthChange(-1)} style={{cursor: 'pointer'}}/></div>
                                 {' '}
                                 <div onClick={() => this.onMonthChange(0)} style={{cursor: 'pointer'}}><h3>Today</h3></div>
                                 {' '}
-                                <FontAwesomeIcon icon={faArrowRight} onClick={() => this.onMonthChange(1)} style={{cursor: 'pointer'}}/>
+                                <div><FontAwesomeIcon icon={faChevronRight} onClick={() => this.onMonthChange(1)} style={{cursor: 'pointer'}}/></div>
                             </div>
                         </Col>
                     </Row>
