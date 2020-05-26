@@ -2,20 +2,20 @@ import React, {Component} from 'react';
 import {
     Row, Col, Container,
 } from 'reactstrap';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {
-    faArrowLeft, faArrowRight
-} from '@fortawesome/free-solid-svg-icons';
 import {connect} from "react-redux";
 
 import moment from 'moment';
+import DayComponent from "./DayComponent";
+import AddTask from "./AddTask";
 
 const initialData = {
     startDate: null,
     start: 0,
     end: 0,
     total: 0,
-    curDate: null
+    curDate: null,
+    isShowModal: false,
+    selectedDate: null
 };
 
 class CalendarUIDays extends Component {
@@ -47,10 +47,40 @@ class CalendarUIDays extends Component {
         return new Date(iYear, iMonth, 0).getDate();
     }
 
-    calcDate(val) {
+    calcDay(val) {
         let d = new Date(this.state.startDate);
         d.setDate(d.getDate() + val);
         return d.getDate();
+    }
+
+    calcDate(val) {
+        let d = new Date(this.state.startDate);
+        d.setDate(d.getDate() + val);
+        return d;
+    }
+
+    onDayClick(d){
+        if(!this.state.isShowModal) {
+            this.setState({isShowModal: !this.state.isShowModal, selectedDate: d});
+            if (this.state.isShowModal) {
+                this.props.changeDateParam({date: this.props.selectedDate});
+            }
+        }
+    }
+
+    closeModal(){
+        this.setState({isShowModal: false});
+    }
+
+    saveTask(date, taskName, taskTime, taskDescription){
+        this.props.changeDateParam({date:date, name: "taskName", val: taskName});
+        this.props.changeDateParam({date:date, name: "taskTime", val: taskTime});
+        this.props.changeDateParam({date:date, name: "taskDescription", val: taskDescription});
+    }
+
+    isSameDate(d){
+        let ret = (moment(d).format("DD-MM-YYYY")+'')===(moment(this.state.selectedDate).format("DD-MM-YYYY")+'');
+        return ret;
     }
 
     render() {
@@ -58,16 +88,27 @@ class CalendarUIDays extends Component {
                 <Container>
                     {
                         this.state.total && [...Array(Math.ceil(this.state.total / 7))].map((jitem, j) => (
-                            <Row className={""} key={j}>
+                            <Row className={""} key={jitem+' '+j}>
                                 {
                                     this.state.total && [...Array(7)].map((item, i) => (
-                                        <Col key={i + '-' + this.calcDate(i+j*7)} style={{
-                                            height: 85,
-                                            borderWidth: 1,
-                                            borderColor: '#F2F2F2',
-                                            borderStyle: 'solid'
-                                        }}>
-                                            <h3>{this.calcDate(i+j*7)}</h3>
+                                        <Col key={i + '-' + (i+j*7)} className={"day-item"} onClick={()=>this.onDayClick(this.calcDate(i+j*7))} >
+                                            <h3 className={"float-right pt-2"}>{this.calcDay(i+j*7)}</h3>
+                                            <DayComponent curDate={this.calcDate(i+j*7)}/>
+                                                {
+                                                    this.props.savedData.map(item=>(
+                                                        item.date===moment(this.calcDate(i+j*7)).format("DD-MM-YYYY") &&
+                                                        <div className={"task"} key={"taskName"+i+j}>
+                                                            {item.taskTime+' '+item.taskName}
+                                                        </div>
+                                                    ))
+                                                }
+                                            <div className={(this.state.isShowModal && this.isSameDate(this.calcDate(i+j*7)))?"visible overlay":"invisible" }>
+                                                <AddTask
+                                                    selectedDate={this.calcDate(i+j*7)}
+                                                    closeModal={()=>this.closeModal()}
+                                                    saveTask={(date, taskName, taskTime, taskDesc)=>this.saveTask(date, taskName, taskTime, taskDesc)}
+                                                />
+                                            </div>
                                         </Col>
                                     ))
                                 }
@@ -84,10 +125,11 @@ class CalendarUIDays extends Component {
 
 const mapStateToProps = (state) => ({
     selectedDate: state.calendars.selectedDate || {},
+    savedData: state.calendars.savedData || []
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onChangeMonth: dispatch.calendars.changeMonth,
+    changeDateParam: dispatch.calendars.changeDateParam,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarUIDays);

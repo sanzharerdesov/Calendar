@@ -13,26 +13,26 @@ class CalendarUIWeeks extends Component {
         return (<React.Fragment>
                 <Container>
                     <Row className={""}>
-                        <Col className="mr-5">
-                            <h3>Sun</h3>
+                        <Col>
+                            <h3 className={"float-right"}>Sun</h3>
                         </Col>
-                        <Col className="mr-5">
-                            <h3>Mon</h3>
+                        <Col>
+                            <h3 className={"float-right"}>Mon</h3>
                         </Col>
-                        <Col className="mr-5">
-                            <h3>Tue</h3>
+                        <Col>
+                            <h3 className={"float-right"}>Tue</h3>
                         </Col>
-                        <Col  className="mr-5">
-                            <h3>Wed</h3>
+                        <Col>
+                            <h3 className={"float-right"}>Wed</h3>
                         </Col>
-                        <Col className="mr-5">
-                            <h3>Thu</h3>
+                        <Col>
+                            <h3 className={"float-right"}>Thu</h3>
                         </Col>
-                        <Col className="mr-5">
-                            <h3>Fri</h3>
+                        <Col>
+                            <h3 className={"float-right"}>Fri</h3>
                         </Col>
-                        <Col className="mr-5">
-                            <h3>Sat</h3>
+                        <Col>
+                            <h3 className={"float-right"}>Sat</h3>
                         </Col>
                     </Row>
                 </Container>
