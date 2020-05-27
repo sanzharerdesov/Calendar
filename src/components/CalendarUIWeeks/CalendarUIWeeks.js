@@ -5,10 +5,6 @@ import {
 import {connect} from "react-redux";
 
 class CalendarUIWeeks extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render(){
         return (<React.Fragment>
                 <Container>

@@ -27,16 +27,17 @@ class AddTask extends Component {
                     taskTime: ""
                 };
             }
+            return null;
         });
     }
 
     componentWillUnmount() {
-        this.state ={
+        this.setState({
             taskName: "",
             taskDate: "",
             taskDescription: "",
             taskTime: ""
-        };
+        });
     }
 
     handleChange(val, name) {
@@ -57,24 +58,24 @@ class AddTask extends Component {
     }
 
     remove() {
-        this.state = {
+        this.setState( {
             taskName: "",
             taskDate: "",
             taskDescription: "",
             taskTime: ""
-        };
+        });
         this.props.removeTask({date: this.props.selectedDate});
         this.props.closeModal();
     }
 
     save() {
         this.props.closeModal();
-        this.state = {
+        this.setState({
             taskName: "",
             taskDate: "",
             taskDescription: "",
             taskTime: ""
-        };
+        });
     }
 
     render() {

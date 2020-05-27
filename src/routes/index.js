@@ -1,7 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import CustomRoute from './Route';
-// import PrivateRoute from './PrivateRoute';
 
 // Containers
 

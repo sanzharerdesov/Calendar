@@ -12,9 +12,6 @@ import moment from 'moment';
 
 
 class CalendarUIHeader extends Component {
-    constructor(props) {
-        super(props);
-    }
     onMonthChange(val){
         this.props.onChangeMonth(val);
     }

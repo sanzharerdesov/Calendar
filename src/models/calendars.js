@@ -71,6 +71,7 @@ export default {
           if(item.date === (moment(payload.date).format("DD-MM-YYYY") + '')){
             index= idx;
           }
+          return index;
         });
         if(index===-1){
           const d = moment(payload.date).format("DD-MM-YYYY");
@@ -94,6 +95,7 @@ export default {
           if(item.date === (moment(payload.date).format("DD-MM-YYYY") + '')){
             index= idx;
           }
+          return index;
         });
         if(index!==-1) {
           state.savedData.splice(index, 1);
